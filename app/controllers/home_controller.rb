@@ -2,6 +2,7 @@ class HomeController < ApplicationController
   before_filter :authenticate_user!
 
   def index
+    current_user.myrsc = Myrsc.new if current_user.myrsc.nil?
     current_user.oxfords.build
   end
 
