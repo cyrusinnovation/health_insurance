@@ -1,0 +1,24 @@
+A new claim is about to be processed.<br/>
+Please check for any errors, if you find any cancel this automated job within 24 hours and submit the EOB manually.<br/>
+If everything looks correct you can ignore this email and your claim will be submitted within 24 hours.
+
+<table style="margin-top:30px; margin-left: 20px;">
+  <tr>
+    <td style="width: 200px;">Claim number</td> <td><%= @claim.number %></td>
+  </tr>
+  <tr>
+    <td>Claim date</td> <td><%= @claim.service_date %></td>
+  </tr>
+  <tr>
+    <td>Claim code</td> <td><%= @claim.service_code %></td>
+  </tr>
+  <tr>
+    <td>Deductible amount</td> <td><%= @claim.deductible_amount %></td>
+  </tr>
+  <tr>
+    <td>Claimant</td> <td><%= @claim.claimant %></td>
+  </tr>
+  <tr>
+    <td>Relationship</td> <td><%= @claim.relationship %></td>
+  </tr>
+</table>
