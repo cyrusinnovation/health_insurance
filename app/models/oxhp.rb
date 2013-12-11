@@ -11,7 +11,6 @@ class Oxhp
   def get_new_claims
     login
     goto_claims_page
-    show_all_claims
     get_eob 1
   end
 
@@ -25,15 +24,18 @@ class Oxhp
 
     claim_number = get_claim_number
     filename = get_filename
+
+    goto_claims_page
     [Claim.new(service_date, service_code, deductible_amount, @claimant, @relationship, filename)]
   end
 
   def goto_claims_page
     @claims_page = @user_home_page.links.find { |l| l.text == 'Claims & Accounts' }.click
+    show_all_claims
   end
 
   def goto_claim_detail_page eob_number
-    link = @all_claims_page.links_with(:text => 'More Details')[eob_number - 1]
+    link = @all_claims_page.links_with(text: 'More Details')[eob_number - 1]
     link.href =~ /'(\/Member.*)'/
     url = "#{domain}#{$1}"
 
