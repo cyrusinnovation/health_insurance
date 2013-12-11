@@ -1,6 +1,4 @@
 class Myrsc
-  attr_reader :page, :agent
-
   def initialize
     @agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE} # succeptable to man-in-the-middle attacks
   end
