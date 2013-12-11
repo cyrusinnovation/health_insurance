@@ -1,0 +1,3 @@
+* TODO
+** passwords stored in plaintext
+** ssl is not verified

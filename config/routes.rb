@@ -1,4 +1,7 @@
 HealthInsurance::Application.routes.draw do
+  devise_for :users
+  root :to => "home#index"
+  post 'submit_info' => 'home#submit_info', as: :submit_info
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
