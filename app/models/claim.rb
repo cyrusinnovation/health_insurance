@@ -5,4 +5,12 @@ class Claim < ActiveRecord::Base
     self.state = 'processed'
     save
   end
+
+  def claimant
+    oxford.claimant
+  end
+
+  def relationship
+    oxford.relationship
+  end
 end
