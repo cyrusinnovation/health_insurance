@@ -2,31 +2,36 @@ require 'rubygems'
 require 'mechanize'
 
 class Oxhp
-  def initialize claimant, relationship
-    @claimant = claimant
-    @relationship = relationship
+  def initialize oxford_credentials
+    @oxford_credentials = oxford_credentials
     @agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE} # succeptable to man-in-the-middle attacks
+
+    login
+    goto_claims_page
   end
 
   def get_new_claims
-    login
-    goto_claims_page
-    get_eob 1
+    num_eobs = @all_claims_page.search("#claims_sum_tbl tr").size - 2
+    num_eobs.times.collect do |num|
+      get_eob(num + 1)
+    end.compact
   end
 
   def get_eob eob_number
     row = @all_claims_page.search("#claims_sum_tbl tr:nth-child(#{eob_number + 1})")
     service_date = get_service_date row
+    return nil if Date.strptime(service_date, '%m/%d/%Y') < Date.strptime('11/05/2013', '%m/%d/%Y')
     service_code = get_service_code row
     deductible_amount = get_deductible_amount row
 
     goto_claim_detail_page eob_number
 
     claim_number = get_claim_number
+    return nil if already_seen_claim_number?(claim_number)
     filename = get_filename
 
     goto_claims_page
-    [Claim.new(service_date, service_code, deductible_amount, @claimant, @relationship, filename)]
+    Claim.new(service_date, service_code, deductible_amount, @oxford_credentials.claimant, @oxford_credentials.relationship, claim_number, filename)
   end
 
   def goto_claims_page
@@ -52,8 +57,8 @@ class Oxhp
   def login
     page = @agent.get(login_url)
     form = page.form('mem_login')
-    form.j_username = ENV['USER']
-    form.j_password = ENV['PASSWORD']
+    form.j_username = @oxford_credentials.username
+    form.j_password = @oxford_credentials.password
     @user_home_page = @agent.submit(form, form.buttons.first)
   end
 
@@ -95,6 +100,10 @@ class Oxhp
     filename = "/Users/jacobodonnell/programming/health_insurance/tmp/#{file.filename}"
     file.save filename
     filename
+  end
+
+  def already_seen_claim_number? claim_number
+    Eob.exists?(claim_number: claim_number)
   end
 
 end

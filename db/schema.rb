@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131211192644) do
+ActiveRecord::Schema.define(version: 20131211212120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "eobs", force: true do |t|
+    t.string "claim_number"
+  end
+
+  add_index "eobs", ["claim_number"], name: "index_eobs_on_claim_number", using: :btree
 
   create_table "myrscs", force: true do |t|
     t.string  "username"
