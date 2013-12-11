@@ -18,20 +18,23 @@ class Oxhp
   end
 
   def get_eob eob_number
+    claim = Claim.new
     row = @all_claims_page.search("#claims_sum_tbl tr:nth-child(#{eob_number + 1})")
-    service_date = get_service_date row
-    return nil if Date.strptime(service_date, '%m/%d/%Y') < Date.strptime('11/05/2013', '%m/%d/%Y')
-    service_code = get_service_code row
-    deductible_amount = get_deductible_amount row
+    claim.service_date = get_service_date row
+    return nil if claim.service_date < Date.strptime('11/05/2013', '%m/%d/%Y')
+    claim.service_code = get_service_code row
+    claim.deductible_amount = get_deductible_amount row
 
     goto_claim_detail_page eob_number
 
-    claim_number = get_claim_number
-    return nil if already_seen_claim_number?(claim_number)
-    filename = get_filename
-
+    claim.claim_number = get_claim_number
+    return nil if already_seen_claim_number?(claim.claim_number)
+    claim.file = get_filename
+    
     goto_claims_page
-    Claim.new(service_date, service_code, deductible_amount, @oxford_credentials.claimant, @oxford_credentials.relationship, claim_number, filename)
+    claim.oxford_id = @oxford_credentials.id
+    claim.save
+    claim
   end
 
   def goto_claims_page
@@ -83,7 +86,7 @@ class Oxhp
 
   def get_service_date row
     row.search('td:nth-child(2)').first.content =~ /Service: (\d+\/\d+\/\d+)/
-    $1
+    Date.strptime($1, '%m/%d/%Y')
   end
 
   def get_deductible_amount row
@@ -103,7 +106,7 @@ class Oxhp
   end
 
   def already_seen_claim_number? claim_number
-    Eob.exists?(claim_number: claim_number)
+    Claim.exists?(claim_number: claim_number)
   end
 
 end

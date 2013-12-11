@@ -11,16 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131211212120) do
+ActiveRecord::Schema.define(version: 20131211225303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "eobs", force: true do |t|
-    t.string "claim_number"
+  create_table "claims", force: true do |t|
+    t.date     "service_date"
+    t.string   "service_code"
+    t.float    "deductible_amount"
+    t.string   "file"
+    t.string   "claim_number"
+    t.string   "state",             default: "unprocessed"
+    t.integer  "oxford_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
-
-  add_index "eobs", ["claim_number"], name: "index_eobs_on_claim_number", using: :btree
 
   create_table "myrscs", force: true do |t|
     t.string  "username"
