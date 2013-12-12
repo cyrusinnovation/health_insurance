@@ -9,6 +9,7 @@ gem 'mechanize'
 gem 'byebug'
 gem 'devise'
 gem 'aws-sdk'
+gem 'encryptor'
 
 group :development do
   gem 'letter_opener'
