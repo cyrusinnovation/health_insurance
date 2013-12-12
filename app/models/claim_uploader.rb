@@ -16,7 +16,7 @@ class ClaimUploader
     page = @agent.get(domain)
     form = page.form('login')
     form.logperson = claim.oxford.user.myrsc.username
-    form.logpass = claim.oxford.user.myrsc.password
+    form.logpass = claim.oxford.user.myrsc.decrypt_password
     @role_select_page = @agent.submit(form, form.buttons.first)
   end
 

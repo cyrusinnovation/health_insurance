@@ -61,7 +61,7 @@ class Oxhp
     page = @agent.get(login_url)
     form = page.form('mem_login')
     form.j_username = @oxford_credentials.username
-    form.j_password = @oxford_credentials.password
+    form.j_password = @oxford_credentials.decrypt_password
     @user_home_page = @agent.submit(form, form.buttons.first)
   end
 
