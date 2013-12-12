@@ -1,5 +1,5 @@
 A new claim is about to be processed.<br/>
-Please check for any errors, if you find any <%= link_to cancel_url(claim_number: @claim.claim_number), 'cancel this automated job within 24 hours' %> and submit the EOB manually.<br/>
+Please check for any errors, if you find any <%= link_to 'cancel this automated job within 24 hours', cancel_url(claim_number: @claim.claim_number) %> and submit the EOB manually.<br/>
 If everything looks correct you can ignore this email and your claim will be submitted within 24 hours.
 
 <table style="margin-top:30px; margin-left: 20px;">

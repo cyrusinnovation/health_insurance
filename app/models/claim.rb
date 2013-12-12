@@ -2,7 +2,7 @@ class Claim < ActiveRecord::Base
   belongs_to :oxford
 
   def self.ready_for_submitting
-    Claim.where("created_at < ?", 1.day.ago).where(state: 'unprocessed')
+    Claim.where("created_at < ?", 1.hour.ago).where(state: 'unprocessed')
   end
 
   def mark_as_submitted
@@ -23,5 +23,13 @@ class Claim < ActiveRecord::Base
 
   def relationship
     oxford.relationship
+  end
+
+  def ready_for_processing?
+    state == 'unprocessed'
+  end
+
+  def user
+    oxford.user
   end
 end

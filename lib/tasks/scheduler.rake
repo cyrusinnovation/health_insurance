@@ -5,7 +5,7 @@ task :process_new_eobs => :environment do
   puts "done."
 end
 
-task :submit_new_eobs => :environment do
+task :submit_eobs => :environment do
   puts 'Running process new eob jobs'
   SubmitEobs.new
   puts 'done.'
