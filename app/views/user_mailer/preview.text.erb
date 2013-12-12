@@ -1,5 +1,5 @@
 A new claim is about to be processed.
-Please check for any errors, if you find any cancel this automated job within 24 hours and submit the EOB manually.
+Please check for any errors, if you find any cancel this automated job within 24 hours by going here <%= cancel_url(@claim.claim_number) %> and submit the  manually.
 If everything looks correct you can ignore this email and your claim will be submitted within 24 hours.
 
 Claim number: <%= @claim.claim_number %>
