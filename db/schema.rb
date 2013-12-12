@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131211225303) do
+ActiveRecord::Schema.define(version: 20131212181303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 20131211225303) do
     t.date     "service_date"
     t.string   "service_code"
     t.float    "deductible_amount"
-    t.string   "file"
     t.string   "claim_number"
     t.string   "state",             default: "unprocessed"
     t.integer  "oxford_id"

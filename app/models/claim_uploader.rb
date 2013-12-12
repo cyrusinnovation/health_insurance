@@ -51,7 +51,9 @@ class ClaimUploader
     form['CtrlOnlineClaim1$endDateBox_input'] = claim.service_date
     form['CtrlOnlineClaim1$claimantBox'] = claim.claimant
     form['CtrlOnlineClaim1$relationshipBox'] = claim.relationship
-    form.file_uploads.first.file_name = claim.file
+    #form.file_uploads.first.file_name = 
+    form.file_uploads.first.file_data = S3.new.read(claim)
+    form.file_uploads.first.mime_type = 'application/pdf'
     form
     #@agent.submit(form, form.buttons_with(value: 'Save this Claim'))
   end

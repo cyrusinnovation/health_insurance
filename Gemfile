@@ -8,6 +8,8 @@ gem 'thin'
 gem 'mechanize'
 gem 'byebug'
 gem 'devise'
+gem 'aws-sdk'
+
 group :development do
   gem 'letter_opener'
 end

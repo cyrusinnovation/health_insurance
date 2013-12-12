@@ -29,7 +29,7 @@ class Oxhp
 
     claim.claim_number = get_claim_number
     return nil if already_seen_claim_number?(claim.claim_number)
-    claim.file = get_filename
+    upload_filename claim
     
     goto_claims_page
     claim.oxford_id = @oxford_credentials.id
@@ -97,16 +97,18 @@ class Oxhp
     @claim_detail_page.search('label[text()="Claim Number:"]').first.next_sibling.next_sibling.content
   end
 
-  def get_filename
+  def upload_filename claim
     form = @claim_detail_page.form('claimsSummaryForm')
     file = @agent.submit(form, form.buttons.first)
-    filename = "/Users/jacobodonnell/programming/health_insurance/tmp/#{file.filename}"
-    file.save filename
-    filename
+    aws claim, file.body
   end
 
   def already_seen_claim_number? claim_number
     Claim.exists?(claim_number: claim_number)
+  end
+
+  def aws claim, pdf
+    S3.new.write claim, pdf
   end
 
 end

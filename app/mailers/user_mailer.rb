@@ -3,7 +3,7 @@ class UserMailer < ActionMailer::Base
 
   def preview user, claim
     @claim = claim
-    attachments['eob.pdf'] = File.read(claim.file)
+    attachments['eob.pdf'] = S3.new.read(claim)
     mail(to: user.email, subject: 'Preview EOB')
   end
 end

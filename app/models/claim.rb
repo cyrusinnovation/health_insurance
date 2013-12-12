@@ -7,13 +7,13 @@ class Claim < ActiveRecord::Base
 
   def mark_as_submitted
     self.state = 'submitted'
-    # delete file
+    S3.new.delete(self)
     save
   end
 
   def mark_as_canceled
     self.state = 'canceled'
-    # delete file
+    S3.new.delete(self)
     save
   end
 
