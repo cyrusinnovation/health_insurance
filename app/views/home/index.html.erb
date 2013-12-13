@@ -18,10 +18,10 @@
     <%= o.password_field :password %>
     <br/>
     <%= o.label :claimant, 'Oxford claimant' %>
-    <%= o.text_field :claimant %>
+    <%= o.text_field :claimant, placeholder: 'Name of claimant' %>
     <br/>
     <%= o.label :relationship, 'Oxford relationship' %>
-    <%= o.text_field :relationship %>
+    <%= o.text_field :relationship, placeholder: 'Self Spouse Child' %>
     <br/><br/>
   <% end %>
   <%= submit_tag %>
