@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "no-reply@cyrusinnovation.com"
 
   def preview user, claim
     @claim = claim
