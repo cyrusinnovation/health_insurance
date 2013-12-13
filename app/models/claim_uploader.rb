@@ -1,7 +1,6 @@
 class ClaimUploader
   def initialize
-    @agent = Mechanize.new if Rails.env.production?
-    @agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE} unless Rails.env.production?
+    @agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE} # makes us vulnerable to man in the middle attacks :'(
   end
 
   def submit_claim claim

@@ -4,8 +4,7 @@ require 'mechanize'
 class Oxhp
   def initialize oxford_credentials
     @oxford_credentials = oxford_credentials
-    @agent = Mechanize.new if Rails.env.production?
-    @agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE} unless Rails.env.production?
+    @agent = Mechanize.new
 
     login
     goto_claims_page
