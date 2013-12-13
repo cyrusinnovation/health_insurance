@@ -21,7 +21,7 @@ class Oxhp
     claim = Claim.new
     row = @all_claims_page.search("#claims_sum_tbl tr:nth-child(#{eob_number + 1})")
     claim.service_date = get_service_date row
-    return nil if claim.service_date < Date.strptime('11/05/2013', '%m/%d/%Y')
+    return nil if claim.service_date < Date.strptime('12/13/2013', '%m/%d/%Y')
     claim.service_code = get_service_code row
     claim.deductible_amount = get_deductible_amount row
 
