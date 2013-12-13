@@ -3,10 +3,14 @@ class FindNewEobs
     User.all.each do |user|
       user.oxfords.each do |oxford|
         puts "logging in as #{oxford.username}"
-        oxhp = Oxhp.new oxford
-        claims = oxhp.get_new_claims
-        claims.each do |claim|
-          UserMailer.preview(user, claim).deliver
+        begin
+          oxhp = Oxhp.new oxford
+          claims = oxhp.get_new_claims
+          claims.each do |claim|
+            UserMailer.preview(user, claim).deliver
+          end
+        rescue
+          puts 'user had error'
         end
       end
     end
