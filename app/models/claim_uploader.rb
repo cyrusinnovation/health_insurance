@@ -1,6 +1,7 @@
 class ClaimUploader
   def initialize
-    @agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE} # succeptable to man-in-the-middle attacks
+    @agent = Mechanize.new if Rails.env.production?
+    @agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE} unless Rails.env.production?
   end
 
   def submit_claim claim
@@ -55,7 +56,7 @@ class ClaimUploader
     form.file_uploads.first.file_data = S3.new.read(claim)
     form.file_uploads.first.mime_type = 'application/pdf'
     form
-    #@agent.submit(form, form.buttons_with(value: 'Save this Claim'))
+    @agent.submit(form, form.buttons_with(value: 'Save this Claim'))
   end
 
   def domain

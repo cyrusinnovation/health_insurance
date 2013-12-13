@@ -4,7 +4,8 @@ require 'mechanize'
 class Oxhp
   def initialize oxford_credentials
     @oxford_credentials = oxford_credentials
-    @agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE} # succeptable to man-in-the-middle attacks
+    @agent = Mechanize.new if Rails.env.production?
+    @agent = Mechanize.new{|a| a.ssl_version, a.verify_mode = 'SSLv3', OpenSSL::SSL::VERIFY_NONE} unless Rails.env.production?
 
     login
     goto_claims_page
@@ -38,11 +39,13 @@ class Oxhp
   end
 
   def goto_claims_page
+    puts 'goto claims page'
     @claims_page = @user_home_page.links.find { |l| l.text == 'Claims & Accounts' }.click
     show_all_claims
   end
 
   def goto_claim_detail_page eob_number
+    puts 'goto claim detail page'
     link = @all_claims_page.links_with(text: 'More Details')[eob_number - 1]
     link.href =~ /'(\/Member.*)'/
     url = "#{domain}#{$1}"
@@ -52,12 +55,14 @@ class Oxhp
   end
 
   def show_all_claims
+    puts 'show all claims'
     form = @claims_page.form('claimsSummaryForm')
     form.dateOfService = 'all'
     @all_claims_page = @agent.submit(form, form.buttons.first)
   end
 
   def login
+    puts "logging in"
     page = @agent.get(login_url)
     form = page.form('mem_login')
     form.j_username = @oxford_credentials.username
