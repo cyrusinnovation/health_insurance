@@ -11,7 +11,9 @@
       <div class="container">
         <div class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
-            <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+            <% if user_signed_in? %>
+              <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+            <% end %>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
