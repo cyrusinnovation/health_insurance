@@ -3,8 +3,10 @@ class Myrsc < ActiveRecord::Base
   before_save :encrypt_password
 
   def encrypt_password
-    self.salt = SecureRandom.base64(40)
-    self.password = Encryptor.encrypt(password, key: secret_key, iv: ENV['IV'], salt: salt)
+    if password
+      self.salt = SecureRandom.base64(40)
+      self.password = Encryptor.encrypt(password, key: secret_key, iv: ENV['IV'], salt: salt)
+    end
   end
 
   def decrypt_password
