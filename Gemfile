@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+ruby '2.0.0'
+
 gem 'rails', '4.0.2'
 
 gem 'pg'
@@ -59,3 +60,5 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+gem 'rails_12factor', group: :production
