@@ -1,5 +1,5 @@
 <%= form_for current_user, url: submit_info_path, method: :post, html: {class: 'form-horizontal'} do |f| %>
-
+  <%= current_user.errors.full_messages.to_sentence  %>
   <%= f.fields_for :myrsc do |m| %>
     <div class="form-group">
       <%= m.label :username, 'MyRsc username', class: 'col-sm-2 control-label' %>

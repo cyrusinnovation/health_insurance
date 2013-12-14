@@ -1,6 +1,11 @@
 class Oxford < ActiveRecord::Base
   belongs_to :user
   before_save :encrypt_password
+  validates :username, length: { minimum: 2 }
+  validates :password, length: { minimum: 2 }
+  validates :claimant, length: { minimum: 2 }
+  validates :relationship, length: { minimum: 2 }
+
 
   def encrypt_password
     self.salt = SecureRandom.base64(40)

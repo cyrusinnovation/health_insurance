@@ -1,6 +1,9 @@
 class Myrsc < ActiveRecord::Base
   belongs_to :user
   before_save :encrypt_password
+  validates :username, length: { minimum: 2 }
+  validates :password, length: { minimum: 2 }
+
 
   def encrypt_password
     if password

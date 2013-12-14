@@ -17,10 +17,15 @@
       </div>
     </div>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    
-    <div class="container">
+    <div class="container content">
+      <% if notice %>
+        <p class="notice alert alert-success"><%= notice %></p>
+      <% end %>
+      
+      <% if alert %>
+        <p class="alert alert alert-danger"><%= alert %></p>
+      <% end %>
+
       <%= yield %>
     </div>
   </body>
