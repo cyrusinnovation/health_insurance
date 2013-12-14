@@ -11,6 +11,8 @@ gem 'devise'
 gem 'aws-sdk'
 gem 'encryptor'
 
+gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails', :github => 'anjlab/bootstrap-rails'
+
 group :development do
   gem 'letter_opener'
 end

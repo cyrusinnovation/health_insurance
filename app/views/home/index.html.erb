@@ -1,28 +1,48 @@
-<%= link_to 'Logout', destroy_user_session_path, method: :delete %>
-<%= form_for current_user, url: submit_info_path, method: :post do |f| %>
+<%= form_for current_user, url: submit_info_path, method: :post, html: {class: 'form-horizontal'} do |f| %>
 
   <%= f.fields_for :myrsc do |m| %>
-    <%= m.label :username, 'MyRsc username' %>
-    <%= m.text_field :username %>
-    <br/>
-    <%= m.label :password, 'MyRsc password' %>
-    <%= m.password_field :password %>
+    <div class="form-group">
+      <%= m.label :username, 'MyRsc username', class: 'col-sm-2 control-label' %>
+      <div class="col-sm-10">
+        <%= m.text_field :username, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= m.label :password, 'MyRsc password', class: 'col-sm-2 control-label' %>
+      <div class="col-sm-10">
+        <%= m.password_field :password, class: 'form-control' %>
+      </div>
+    </div>
   <% end %>
   <br/>
   <br/>
   <%= f.fields_for :oxfords do |o| %>
-    <%= o.label :username, 'Oxford username' %>
-    <%= o.text_field :username %>
-    <br/>
-    <%= o.label :password, 'Oxford password' %>
-    <%= o.password_field :password %>
-    <br/>
-    <%= o.label :claimant, 'Oxford claimant' %>
-    <%= o.text_field :claimant, placeholder: 'Name of claimant' %>
-    <br/>
-    <%= o.label :relationship, 'Oxford relationship' %>
-    <%= o.text_field :relationship, placeholder: 'Self Spouse Child' %>
-    <br/><br/>
+    <div class="form-group">
+      <%= o.label :username, 'Oxford username', class: 'col-sm-2 control-label' %>
+      <div class="col-sm-10">
+        <%= o.text_field :username, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= o.label :password, 'Oxford password', class: 'col-sm-2 control-label' %>
+      <div class="col-sm-10">
+        <%= o.password_field :password, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= o.label :claimant, 'Oxford claimant', class: 'col-sm-2 control-label' %>
+      <div class="col-sm-10">
+        <%= o.text_field :claimant, class: 'form-control', placeholder: 'Name of claimant' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= o.label :relationship, 'Oxford relationship', class: 'col-sm-2 control-label' %>
+      <div class="col-sm-10">
+        <%= o.text_field :relationship, class: 'form-control', placeholder: 'Self Spouse Child' %>
+      </div>
+    </div>
   <% end %>
-  <%= submit_tag %>
+  <div class="col-md-offset-2">
+    <%= submit_tag 'Save', class: 'btn btn-primary save' %>
+  </div>
 <% end %>
